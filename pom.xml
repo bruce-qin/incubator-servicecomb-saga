@@ -729,4 +729,21 @@
       </build>
     </profile>
   </profiles>
+
+  <repositories>
+    <repository>
+      <id>nexus</id>
+      <name>Nexus Public</name>
+      <url>http://192.168.200.125:8081/repository/maven-public/</url>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>nexus</id>
+      <name>Nexus Public</name>
+      <url>http://192.168.200.125:8081/repository/maven-public/</url>
+    </pluginRepository>
+  </pluginRepositories>
+
 </project>
