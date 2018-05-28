@@ -22,38 +22,38 @@ alpha:
     host: 0.0.0.0
     port: 8080
 
----
-spring:
-  profiles: ssl
-alpha:
-  server:
-    ssl:
-      enable: true
-      cert: server.crt
-      key: server.pem
-      mutualAuth: true
-      clientCert: client.crt
+#---
+#spring:
+#  profiles: ssl
+#alpha:
+#  server:
+#    ssl:
+#      enable: true
+#      cert: server.crt
+#      key: server.pem
+#      mutualAuth: true
+#      clientCert: client.crt
         
----
+#---
 spring:
-  profiles: prd
+#  profiles: prd
   datasource:
-    username: saga
-    password: password
-    url: jdbc:postgresql://postgresql.servicecomb.io:5432/saga?useSSL=false
+    username: postgres
+    password: 123
+    url: jdbc:postgresql://192.168.200.125:5432/saga?useSSL=false
     platform: postgresql
 #    continue-on-error: true
 
----
-spring:
-  profiles: mysql
-  datasource:
-    username: saga
-    password: password
-    url: jdbc:mysql://mysql.servicecomb.io:3306/saga?useSSL=false
-    platform: mysql
-    continue-on-error: true
-  jpa:
-    properties:
-      eclipselink:
-        ddl-generation: none
+#---
+#spring:
+#  profiles: mysql
+#  datasource:
+#    username: saga
+#    password: password
+#    url: jdbc:mysql://mysql.servicecomb.io:3306/saga?useSSL=false
+#    platform: mysql
+#    continue-on-error: true
+#  jpa:
+#    properties:
+#      eclipselink:
+#        ddl-generation: none
