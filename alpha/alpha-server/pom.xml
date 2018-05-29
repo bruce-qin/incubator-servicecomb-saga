@@ -139,9 +139,18 @@
       <groupId>io.netty</groupId>
       <artifactId>netty-tcnative-boringssl-static</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.lmax</groupId>
+      <artifactId>disruptor</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
+    <finalName>${project.artifactId}</finalName>
     <plugins>
       <!-- mixin plugin configurations declared in another pom,
       just like importing dependencies managed in another pom -->
@@ -152,6 +161,17 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <mainClass>org.apache.servicecomb.saga.alpha.server.AlphaApplication</mainClass>
+          <fork>true</fork>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>com.ethlo.persistence.tools</groupId>
@@ -165,24 +185,23 @@
       <id>docker</id>
       <build>
         <plugins>
-          <plugin>
+          <!--<plugin>
             <groupId>io.fabric8</groupId>
             <artifactId>docker-maven-plugin</artifactId>
               <configuration>
                   <dockerHost>tcp://192.168.200.125:2375</dockerHost>
                 <images>
                   <image>
-                    <name>saga/${project.artifactId}</name> <!--生成的image名-->
+                    <name>saga/${project.artifactId}</name> &lt;!&ndash;生成的image名&ndash;&gt;
                     <alias>${project.artifactId}</alias>
                     <build>
                       <from>java:8u111-jre</from>
                       <tags>
                         <tag>latest</tag>
-                        <!--<tag>${project.version}</tag>-->
+                        &lt;!&ndash;<tag>${project.version}</tag>&ndash;&gt;
                       </tags>
                       <ports>
-                        <port>8899</port>
-                        <port>8989</port>
+                        <port>8899,8989</port>
                       </ports>
                       <volumes>
                         <volume>/usr/local/src/saga</volume>
@@ -192,30 +211,58 @@
                       </buildOptions>
 
                       <entryPoint>
-                        <!-- exec form for ENTRYPOINT -->
+                        &lt;!&ndash; exec form for ENTRYPOINT &ndash;&gt;
                         <exec>
                           <arg>java</arg>
-                          <arg>-jar</arg>  <!--启动参数-->
+                          <arg>-jar</arg>  &lt;!&ndash;启动参数&ndash;&gt;
                           <arg>/usr/local/src/saga/${project.artifactId}.jar</arg>
                         </exec>
                       </entryPoint>
 
                       <assembly>
                         <mode>dir</mode>
-                        <basedir>${parent.parent.basedir}/docker-build-config/assembly</basedir>
+                        <basedir>/</basedir>
                         <descriptor>assembly.xml</descriptor>
                       </assembly>
                     </build>
                     <run>
-                      <namingStrategy>alias</namingStrategy>  <!--container全名规则-->
+                      <namingStrategy>alias</namingStrategy>  &lt;!&ndash;container全名规则&ndash;&gt;
                       <ports>
-                        <port>8899:8899</port> <!--端口映射-->
-                        <port>8989:8989</port> <!--端口映射-->
+                        <port>8899:8899,8989:8989</port> &lt;!&ndash;端口映射&ndash;&gt;
                       </ports>
                     </run>
                   </image>
                 </images>
               </configuration>
+          </plugin>-->
+          <plugin>
+            <groupId>com.spotify</groupId>
+            <artifactId>docker-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <phase>package</phase>
+                <goals>
+                  <goal>build</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <!-- optionally overwrite tags every time image is built with docker:build -->
+              <dockerHost>http://192.168.200.125:2375</dockerHost>
+              <forceTags>true</forceTags>
+              <imageTags>
+                <imageTag>latest</imageTag>
+              </imageTags>
+              <imageName>saga/${project.build.finalName}</imageName>
+              <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
+              <resources>
+                <resource>
+                  <targetPath>/</targetPath>
+                  <directory>${project.build.directory}</directory>
+                  <include>${project.build.finalName}-exec.jar</include>
+                </resource>
+              </resources>
+            </configuration>
           </plugin>
           <plugin>
             <groupId>org.commonjava.maven.plugins</groupId>
