@@ -15,12 +15,12 @@
 ## limitations under the License.
 ## ---------------------------------------------------------------------------
 server:
-  port: 8090
+  port: 8899
 
 alpha:
   server:
     host: 0.0.0.0
-    port: 8080
+    port: 8989
 
 #---
 #spring:
