@@ -38,6 +38,7 @@
     <module>pack-common</module>
     <module>integration-tests</module>
     <module>saga-persistence</module>
+    <module>saga-demo</module>
   </modules>
 
   <properties>
@@ -632,6 +633,19 @@
           </excludes>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.2.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
@@ -654,19 +668,6 @@
                 <phase>verify</phase>
                 <goals>
                   <goal>sign</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-source-plugin</artifactId>
-            <version>2.2.1</version>
-            <executions>
-              <execution>
-                <id>attach-sources</id>
-                <goals>
-                  <goal>jar-no-fork</goal>
                 </goals>
               </execution>
             </executions>
@@ -753,4 +754,16 @@
     </pluginRepository>
   </pluginRepositories>
 
+  <distributionManagement>
+    <repository>
+      <id>nexus</id>
+      <name>Nexus Releases</name>
+      <url>http://192.168.200.125:8081/repository/maven-releases/</url>
+    </repository>
+    <snapshotRepository>
+      <id>nexus</id>
+      <name>Nexus Snapshot</name>
+      <url>http://192.168.200.125:8081/repository/maven-snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
 </project>
