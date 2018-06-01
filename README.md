@@ -20,7 +20,8 @@ The following diagram shows the relationships among alpha, omega and services.
 See [Saga Pack Design](docs/design.md) for details. 
 
 ## Get Started
-See [Booking Demo](saga-demo/booking/README.md) for details.
+* For Spring Cloud applications, please see [Booking Demo](saga-demo/saga-spring-cloud-demo/README.md) for details.
+* For Dubbo applications, please see [Dubbo Demo](saga-demo/saga-dubbo-demo/README.md) for details.
 
 ## Build and Run the tests from source
 * Build the source demo docker image and run all tests
@@ -35,6 +36,10 @@ Since Spring Boot supports JDK9 since 2.x, if you want to build and run test the
 
 ## User Guide
 How to build and use can refer to [User Guide](docs/user_guide.md).
+
+## Get The Latest Release
+
+[Download Saga](http://servicecomb.incubator.apache.org/release/saga-downloads/)
 
 ## [FAQ](FAQ.md)
 
