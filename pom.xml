@@ -49,7 +49,7 @@
     <log4j.version>2.6.2</log4j.version>
     <spring.boot.version>2.0.2.RELEASE</spring.boot.version>
     <spring.boot2.version>${spring.boot.version}</spring.boot2.version>
-    <spring.cloud.version>Finchley.RC1</spring.cloud.version>
+    <spring.cloud.version>Finchley.RC2</spring.cloud.version>
     <postgresql.version>42.2.2</postgresql.version>
     <java.chassis.version>1.0.0-m1</java.chassis.version>
     <spring.version>5.0.6.RELEASE</spring.version>
